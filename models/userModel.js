@@ -5,5 +5,11 @@ function findAll() {
     resolve(users);
   });
 }
+function findOne(id) {
+  return new Promise((resolve, reject) => {
+    const user = users.find((user) => String(user.id) === String(id));
+    resolve(user);
+  });
+}
 
-module.exports = { findAll };
+module.exports = { findAll, findOne };

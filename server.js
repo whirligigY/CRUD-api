@@ -1,9 +1,13 @@
 const http = require('http');
-const { getUsers } = require('./controllers/userController');
+const { getUsers, getUser } = require('./controllers/userController');
 
 const server = http.createServer((req, res) => {
+  const reg_exp = /\/api\/users\/([0-9]+)/;
   if (req.url === '/api/users' && req.method === 'GET') {
     getUsers(req, res);
+  } else if (req.url.match(reg_exp) && req.method === 'GET') {
+    const userId = req.url.split('/')[3];
+    getUser(req, res, userId);
   } else {
     res.writeHeader(404, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ message: 'Route not found' }));
