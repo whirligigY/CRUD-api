@@ -14,7 +14,7 @@ const getUser = async (req, res, id) => {
     const user = await User.findOne(id);
     if (!user) {
       res.writeHeader(404, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'Product not found' }));
+      res.end(JSON.stringify({ message: 'User not found' }));
     } else {
       res.writeHeader(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(user));
@@ -38,9 +38,40 @@ const addUser = async (req, res) => {
     console.log(err);
   }
 };
+//PUT api/users/:id
+const updateUser = async (req, res, id) => {
+  const requiredUser = await User.findOne(id);
+  if (!requiredUser) {
+    res.writeHeader(404, { 'Content-Type': 'application/json' });
+    req.end(JSON.stringify({ message: 'User not found' }));
+  } else {
+    let body = '';
+    req.on('data', (chank) => {
+      body += chank;
+    });
+    req.on('end', async () => {
+      const { username, age, hobbies } = JSON.parse(body);
+      const updatedUser = {
+        username: username || requiredUser.username,
+        age: age || requiredUser.age,
+        hobbies: hobbies || requiredUser.hobbies,
+      };
+      const user = await User.update(updatedUser, id);
+      res.writeHeader(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(user));
+    });
+  }
+  try {
+  } catch (e) {
+    console.log(e);
+  }
+};
+const deleteUser = (req, res, id) => {};
 
 module.exports = {
   getUsers,
   getUser,
   addUser,
+  updateUser,
+  deleteUser,
 };

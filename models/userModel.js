@@ -21,5 +21,14 @@ function add(user) {
     resolve(newUser);
   });
 }
+function update(updatedUser, id) {
+  return new Promise((resolve, reject) => {
+    const index = users.findIndex((user) => String(user.id) === String(id));
+    users[index] = { id, ...updatedUser };
+    writeData('./data/users.json', users);
 
-module.exports = { findAll, findOne, add };
+    resolve(users[index]);
+  });
+}
+
+module.exports = { findAll, findOne, add, update };

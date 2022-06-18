@@ -1,16 +1,14 @@
 [
-  { "id": 1, "username": "Yulia", "age": 23, "hobbies": "cooking sweets" },
-  { "id": 2, "username": "Pavel", "age": 33, "hobbies": "skiing" },
   {
-    "id": "537ae5e4-436d-4bb9-a953-4b791075cff9",
-    "username": "test test",
-    "age": 35,
-    "hobbies": []
+    "id": "ebbb8f32-693e-4308-ac93-8ec6b6857613",
+    "username": "Artem",
+    "age": 10,
+    "hobbies": ["draw", "trtryty"]
   },
   {
-    "id": "86c8aadc-7764-4866-8564-31b2bb892256",
-    "username": "test test",
-    "age": 54,
-    "hobbies": ["dance"]
+    "id": "634ed23c-8143-48d2-8800-a7979c1a5adf",
+    "username": "Yulia",
+    "age": 39,
+    "hobbies": ["cook"]
   }
 ]
