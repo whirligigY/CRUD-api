@@ -1,14 +1,16 @@
 [
+  { "id": 1, "username": "Yulia", "age": 23, "hobbies": "cooking sweets" },
+  { "id": 2, "username": "Pavel", "age": 33, "hobbies": "skiing" },
   {
-    "id": 1,
-    "username": "Yulia",
-    "age": 23,
-    "hobbies": "cooking sweets"
+    "id": "537ae5e4-436d-4bb9-a953-4b791075cff9",
+    "username": "test test",
+    "age": 35,
+    "hobbies": []
   },
   {
-    "id": 2,
-    "username": "Pavel",
-    "age": 33,
-    "hobbies": "skiing"
+    "id": "86c8aadc-7764-4866-8564-31b2bb892256",
+    "username": "test test",
+    "age": 54,
+    "hobbies": ["dance"]
   }
 ]

@@ -5,8 +5,8 @@ const getUsers = async (req, res) => {
     const users = await User.findAll();
     res.writeHeader(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(users));
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.log(err);
   }
 };
 const getUser = async (req, res, id) => {
@@ -19,10 +19,28 @@ const getUser = async (req, res, id) => {
       res.writeHeader(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(user));
     }
-  } catch (e) {}
+  } catch (err) {
+    console.log(err);
+  }
+};
+const addUser = async (req, res) => {
+  try {
+    let body = '';
+    req.on('data', (chank) => {
+      body += chank;
+    });
+    req.on('end', async () => {
+      const createdUser = await User.add(JSON.parse(body));
+      res.writeHeader(201, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(createdUser));
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 module.exports = {
   getUsers,
   getUser,
+  addUser,
 };

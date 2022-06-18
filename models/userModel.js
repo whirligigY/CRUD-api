@@ -1,4 +1,6 @@
 const users = require('../data/users.json');
+const { v4: uuidv4 } = require('uuid');
+const { writeData } = require('../utils');
 
 function findAll() {
   return new Promise((resolve, reject) => {
@@ -11,5 +13,13 @@ function findOne(id) {
     resolve(user);
   });
 }
+function add(user) {
+  return new Promise((resolve, reject) => {
+    const newUser = { id: uuidv4(), ...user };
+    users.push(newUser);
+    writeData('./data/users.json', users);
+    resolve(newUser);
+  });
+}
 
-module.exports = { findAll, findOne };
+module.exports = { findAll, findOne, add };
