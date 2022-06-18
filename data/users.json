@@ -10,5 +10,11 @@
     "username": "Yulia",
     "age": 39,
     "hobbies": ["cook"]
+  },
+  {
+    "id": "cf1bd356-4812-4f40-9b12-905271fc1008",
+    "username": "Ivan",
+    "age": 26,
+    "hobbies": []
   }
 ]

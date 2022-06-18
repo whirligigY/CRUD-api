@@ -6,22 +6,19 @@ const writeData = (path, info) => {
       console.log(`Err: ${err}`);
     }
   });
+};
+const validateUser = (obj) => {
+  let isValidData = false;
+  const requiredFields = ['username', 'age', 'hobbies'];
+  console.log('Object.keys(obj)', Object.keys(obj));
+  isValidData = requiredFields.every(
+    (field) => field === Object.keys(obj).find((el) => el === field),
+  );
 
-  // fs.unlink(path, (err) => {
-  //   if (err) throw new Error('FS operation failed');
-  // });
-  // fs.writeFile(path, JSON.stringify(info), 'utf8', (err) => {
-  //   if (err) {
-  //     console.log(`Err: ${err}`);
-  //   }
-  // });
-  // const stream = fs.createWriteStream(path, 'utf8');
-
-  // stream.on('error', (err) => console.log(`Err: ${err}`));
-  // stream.write(JSON.stringify(info));
-  // stream.end();
+  return isValidData;
 };
 
 module.exports = {
   writeData,
+  validateUser,
 };

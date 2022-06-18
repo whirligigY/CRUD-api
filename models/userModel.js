@@ -30,5 +30,13 @@ function update(updatedUser, id) {
     resolve(users[index]);
   });
 }
+function remove(id) {
+  return new Promise((resolve, reject) => {
+    const updatedUsers = users.filter((user) => user.id !== id);
+    deletedUser = users.find((user) => user.id === id);
+    writeData('./data/users.json', updatedUsers);
+    resolve(deletedUser);
+  });
+}
 
-module.exports = { findAll, findOne, add, update };
+module.exports = { findAll, findOne, add, update, remove };

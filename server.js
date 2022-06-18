@@ -12,9 +12,8 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const server = http.createServer((req, res) => {
-  //   const reg_exp = /\/api\/users\/([0-9]+)/;
   const reg_exp =
-    /[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/;
+    /\/api\/users\/[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/g;
   if (req.url === '/api/users' && req.method === 'GET') {
     getUsers(req, res);
   } else if (req.url.match(reg_exp) && req.method === 'GET') {
@@ -28,6 +27,14 @@ const server = http.createServer((req, res) => {
   } else if (req.url.match(reg_exp) && req.method === 'DELETE') {
     const userId = req.url.split('/')[3];
     deleteUser(req, res, userId);
+  } else if (
+    req.url.match(/\/api\/users\/+/) &&
+    (req.method === 'GET' || req.method === 'DELETE' || req.method === 'PUT')
+  ) {
+    if (!req.url.match(reg_exp)) {
+      res.writeHeader(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'Invalid ID' }));
+    }
   } else {
     res.writeHeader(404, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ message: 'Route not found' }));
