@@ -8,6 +8,8 @@ Clone repo
 
     git clone https://github.com/whirligigY/CRUD-api
 
+Go to the develop branch
+
 Install the dependences
 
     npm install
