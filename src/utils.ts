@@ -1,13 +1,14 @@
 const fs = require('fs');
+import User = require('./interfaces');
 
-const writeData = (path, info) => {
-  fs.writeFileSync(path, JSON.stringify(info), 'utf8', (err) => {
+const writeData = (path: string, info: User) => {
+  fs.writeFileSync(path, JSON.stringify(info), 'utf8', (err: Error) => {
     if (err) {
       console.log(`Err: ${err}`);
     }
   });
 };
-const validateUser = (obj) => {
+const validateUser = (obj: User) => {
   let isValidData = false;
   const requiredFields = ['username', 'age', 'hobbies'];
   console.log('Object.keys(obj)', Object.keys(obj));

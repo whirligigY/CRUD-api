@@ -1,19 +1,20 @@
-const users = require('../data/users.json');
+let users = require('../../data/users.json');
 const { v4: uuidv4 } = require('uuid');
 const { writeData } = require('../utils');
+import User = require('../interfaces');
 
 function findAll() {
   return new Promise((resolve, reject) => {
     resolve(users);
   });
 }
-function findOne(id) {
+function findOne(id: string) {
   return new Promise((resolve, reject) => {
-    const user = users.find((user) => String(user.id) === String(id));
+    const user = users.find((user: User) => String(user.id) === String(id));
     resolve(user);
   });
 }
-function add(user) {
+function add(user: User) {
   return new Promise((resolve, reject) => {
     const newUser = { id: uuidv4(), ...user };
     users.push(newUser);
@@ -21,21 +22,22 @@ function add(user) {
     resolve(newUser);
   });
 }
-function update(updatedUser, id) {
+function update(updatedUser: User, id: string) {
   return new Promise((resolve, reject) => {
-    const index = users.findIndex((user) => String(user.id) === String(id));
+    const index = users.findIndex(
+      (user: User) => String(user.id) === String(id),
+    );
     users[index] = { id, ...updatedUser };
     writeData('./data/users.json', users);
 
     resolve(users[index]);
   });
 }
-function remove(id) {
+function remove(id: string) {
   return new Promise((resolve, reject) => {
-    const updatedUsers = users.filter((user) => user.id !== id);
-    deletedUser = users.find((user) => user.id === id);
-    writeData('./data/users.json', updatedUsers);
-    resolve(deletedUser);
+    users = users.filter((user: User) => user.id !== id);
+    writeData('./data/users.json', users);
+    resolve(null);
   });
 }
 

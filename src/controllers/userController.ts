@@ -1,30 +1,35 @@
 const User = require('../models/userModel');
 const { validateUser } = require('../utils');
+import { IncomingMessage, ServerResponse, Server } from 'http';
 
-const getUsers = async (req, res) => {
+const getUsers = async (req: IncomingMessage, res: ServerResponse) => {
   try {
     const users = await User.findAll();
-    res.writeHeader(200, { 'Content-Type': 'application/json' });
+    res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(users));
   } catch (err) {
     console.log(err);
   }
 };
-const getUser = async (req, res, id) => {
+const getUser = async (
+  req: IncomingMessage,
+  res: ServerResponse,
+  id: string,
+) => {
   try {
     const user = await User.findOne(id);
     if (!user) {
-      res.writeHeader(404, { 'Content-Type': 'application/json' });
+      res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'User not found' }));
     } else {
-      res.writeHeader(200, { 'Content-Type': 'application/json' });
+      res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(user));
     }
   } catch (err) {
     console.log(err);
   }
 };
-const addUser = async (req, res) => {
+const addUser = async (req: IncomingMessage, res: ServerResponse) => {
   try {
     let body = '';
     req.on('data', (chank) => {
@@ -34,13 +39,12 @@ const addUser = async (req, res) => {
       const { username, age, hobbies } = JSON.parse(body);
       const newUser = { username, age, hobbies };
       const isValidData = validateUser(newUser);
-      console.log('isValidData', isValidData);
       if (isValidData) {
         const createdUser = await User.add(JSON.parse(body));
-        res.writeHeader(201, { 'Content-Type': 'application/json' });
+        res.writeHead(201, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(createdUser));
       } else {
-        res.writeHeader(400, { 'Content-Type': 'application/json' });
+        res.writeHead(400, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ message: 'User data is not correct' }));
       }
     });
@@ -49,12 +53,16 @@ const addUser = async (req, res) => {
   }
 };
 //PUT api/users/:id
-const updateUser = async (req, res, id) => {
+const updateUser = async (
+  req: IncomingMessage,
+  res: ServerResponse,
+  id: string,
+) => {
   try {
     const requiredUser = await User.findOne(id);
     if (!requiredUser) {
-      res.writeHeader(404, { 'Content-Type': 'application/json' });
-      req.end(JSON.stringify({ message: 'User for update not found' }));
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'User for update not found' }));
     } else {
       let body = '';
       req.on('data', (chank) => {
@@ -68,7 +76,7 @@ const updateUser = async (req, res, id) => {
           hobbies: hobbies || requiredUser.hobbies,
         };
         const user = await User.update(updatedUser, id);
-        res.writeHeader(200, { 'Content-Type': 'application/json' });
+        res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(user));
       });
     }
@@ -76,16 +84,20 @@ const updateUser = async (req, res, id) => {
     console.log(err);
   }
 };
-const deleteUser = async (req, res, id) => {
+const deleteUser = async (
+  req: IncomingMessage,
+  res: ServerResponse,
+  id: String,
+) => {
   try {
-    const userForDelete = User.findOne(id);
+    const userForDelete = await User.findOne(id);
     if (!userForDelete) {
-      res.writeHeader(404, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'User for delete not found' }));
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'User not found' }));
     } else {
       await User.remove(id);
-      res.writeHeader(204, { 'Content-Type': 'application/json' });
-      res.one(JSON.stringify({ message: `User with id ${id} removed` }));
+      res.writeHead(204, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: `User with id ${id} removed` }));
     }
   } catch (err) {
     console.log(err);

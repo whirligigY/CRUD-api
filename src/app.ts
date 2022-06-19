@@ -1,4 +1,4 @@
-const http = require('http');
+const { createServer, IncomingMessage, ServerResponse } = require('http');
 const {
   getUsers,
   getUser,
@@ -7,11 +7,9 @@ const {
   deleteUser,
 } = require('./controllers/userController');
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
+require('dotenv').config();
 
-const server = http.createServer((req, res) => {
+const server = createServer((req: any, res: any) => {
   const reg_exp =
     /\/api\/users\/[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/g;
   if (req.url === '/api/users' && req.method === 'GET') {
