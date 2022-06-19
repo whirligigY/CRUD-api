@@ -8,7 +8,8 @@ const getUsers = async (req: IncomingMessage, res: ServerResponse) => {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(users));
   } catch (err) {
-    console.log(err);
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ message: 'Server error' }));
   }
 };
 const getUser = async (
@@ -26,7 +27,8 @@ const getUser = async (
       res.end(JSON.stringify(user));
     }
   } catch (err) {
-    console.log(err);
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ message: 'Server error' }));
   }
 };
 const addUser = async (req: IncomingMessage, res: ServerResponse) => {
@@ -36,20 +38,25 @@ const addUser = async (req: IncomingMessage, res: ServerResponse) => {
       body += chank;
     });
     req.on('end', async () => {
-      const { username, age, hobbies } = JSON.parse(body);
-      const newUser = { username, age, hobbies };
-      const isValidData = validateUser(newUser);
-      if (isValidData) {
-        const createdUser = await User.add(JSON.parse(body));
-        res.writeHead(201, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(createdUser));
-      } else {
+      try {
+        const newUser = JSON.parse(body);
+
+        const isValidData = validateUser(newUser);
+        if (isValidData) {
+          const createdUser = await User.add(newUser);
+          res.writeHead(201, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify(createdUser));
+        } else {
+          throw new Error();
+        }
+      } catch (err) {
         res.writeHead(400, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ message: 'User data is not correct' }));
       }
     });
   } catch (err) {
-    console.log(err);
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ message: 'Server error' }));
   }
 };
 //PUT api/users/:id
@@ -81,7 +88,8 @@ const updateUser = async (
       });
     }
   } catch (err) {
-    console.log(err);
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ message: 'Server error' }));
   }
 };
 const deleteUser = async (
@@ -100,7 +108,8 @@ const deleteUser = async (
       res.end(JSON.stringify({ message: `User with id ${id} removed` }));
     }
   } catch (err) {
-    console.log(err);
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ message: 'Server error' }));
   }
 };
 

@@ -4,10 +4,11 @@
   "description": "crud-api",
   "main": "dist/app.js",
   "scripts": {
-    "start:dev": "NODE_ENV=develop nodemon server.js",
-    "start:prod": "tsc && node build/server.js",
-    "dev": "NODE_ENV=develop nodemon server.js",
-    "build": "tsc && node dist/app.js"
+    "start:dev": "nodemon src/app.ts",
+    "start:prod": "tsc && node dist/app.js",
+    "dev": "nodemon src/app.ts",
+    "build": "tsc && node dist/app.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -21,8 +22,12 @@
   },
   "homepage": "https://github.com/whirligigY/CRUD-api#readme",
   "devDependencies": {
+    "@types/jest": "^28.1.2",
     "@types/node": "^18.0.0",
+    "jest": "^28.1.1",
     "nodemon": "^2.0.16",
+    "supertest": "^6.2.3",
+    "ts-jest": "^28.0.5",
     "ts-node": "^10.8.1",
     "typescript": "^4.7.4"
   },

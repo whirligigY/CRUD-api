@@ -11,7 +11,6 @@ const writeData = (path: string, info: User) => {
 const validateUser = (obj: User) => {
   let isValidData = false;
   const requiredFields = ['username', 'age', 'hobbies'];
-  console.log('Object.keys(obj)', Object.keys(obj));
   isValidData = requiredFields.every(
     (field) => field === Object.keys(obj).find((el) => el === field),
   );
