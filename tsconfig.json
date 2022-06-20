@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es6",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "dist"
+  },
+  "lib": ["es2015"],
+  "files": [
+    "src/app.ts",
+    "src/interfaces.ts",
+    "src/app.ts",
+    "src/utils.ts",
+    "src/models/userModel.ts",
+    "src/controllers/userController.ts"
+  ]
+}
